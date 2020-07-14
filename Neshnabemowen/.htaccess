@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Neshnabemowen"
+Require valid-user
+AuthUserFile /usr/home/lajones/neshnabemowen.passwd

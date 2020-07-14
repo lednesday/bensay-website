@@ -1,0 +1,1650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CuPED - Flowplayer template</title>
+<script type="text/javascript" src="js/jquery.pack.js"></script>
+<script type="text/javascript" src="js/flashembed.min.js"></script>
+<script type="text/javascript" src="js/flow.embed.js"></script>
+
+<script type="text/javascript">
+    //<![CDATA[
+    // A reference to the Flowplayer instance.
+    var fp;
+
+    // Check which annotation we're in every 50 milliseconds.
+    var updateInterval = 50;
+
+    // An array of annotations and their starting and ending times, in milli-
+    // seconds.
+    var annotations = [
+        { 'id': 'a2', 'start': 0.0, 'end': 10.631 },
+        { 'id': 'a3', 'start': 10.631, 'end': 16.8 },
+        { 'id': 'a4', 'start': 16.8, 'end': 27.476 },
+        { 'id': 'a5', 'start': 27.476, 'end': 33.921 },
+        { 'id': 'a6', 'start': 33.921, 'end': 43.38 },
+        { 'id': 'a7', 'start': 43.38, 'end': 52.97 },
+        { 'id': 'a8', 'start': 52.97, 'end': 63.996 },
+        { 'id': 'a9', 'start': 63.996, 'end': 74.15 },
+        { 'id': 'a10', 'start': 74.15, 'end': 83.678 },
+        { 'id': 'a11', 'start': 83.678, 'end': 90.444 },
+        { 'id': 'a12', 'start': 90.444, 'end': 94.887 },
+        { 'id': 'a13', 'start': 94.887, 'end': 101.469 },
+        { 'id': 'a14', 'start': 101.469, 'end': 105.314 },
+        { 'id': 'a15', 'start': 105.314, 'end': 113.152 },
+        { 'id': 'a16', 'start': 113.152, 'end': 119.242 },
+        { 'id': 'a17', 'start': 119.242, 'end': 126.797 },
+        { 'id': 'a18', 'start': 126.797, 'end': 132.895 },
+        { 'id': 'a19', 'start': 132.895, 'end': 143.194 },
+        { 'id': 'a20', 'start': 143.194, 'end': 147.883 },
+        { 'id': 'a21', 'start': 147.883, 'end': 156.502 },
+        { 'id': 'a22', 'start': 156.502, 'end': 161.708 },
+        { 'id': 'a23', 'start': 161.708, 'end': 167.206 },
+        { 'id': 'a24', 'start': 167.206, 'end': 172.911 },
+        { 'id': 'a25', 'start': 172.911, 'end': 176.237 },
+        { 'id': 'a26', 'start': 176.237, 'end': 180.35 },
+        { 'id': 'a27', 'start': 180.35, 'end': 193.434 },
+        { 'id': 'a28', 'start': 193.434, 'end': 197.04 },
+        { 'id': 'a29', 'start': 197.04, 'end': 206.292 },
+        { 'id': 'a30', 'start': 206.292, 'end': 216.484 },
+        { 'id': 'a31', 'start': 216.484, 'end': 227.881 },
+        { 'id': 'a32', 'start': 227.881, 'end': 236.017 },
+        { 'id': 'a33', 'start': 236.017, 'end': 241.488 },
+        { 'id': 'a34', 'start': 241.488, 'end': 245.237 },
+        { 'id': 'a35', 'start': 245.237, 'end': 248.904 },
+        { 'id': 'a36', 'start': 248.904, 'end': 255.878 },
+        { 'id': 'a37', 'start': 255.878, 'end': 262.896 },
+        { 'id': 'a38', 'start': 262.896, 'end': 268.665 },
+        { 'id': 'a39', 'start': 268.665, 'end': 275.548 },
+        { 'id': 'a40', 'start': 275.548, 'end': 283.781 },
+        { 'id': 'a41', 'start': 283.781, 'end': 289.67 },
+        { 'id': 'a42', 'start': 289.67, 'end': 300.347 },
+        { 'id': 'a43', 'start': 300.347, 'end': 309.602 },
+        { 'id': 'a44', 'start': 309.602, 'end': 314.832 },
+        { 'id': 'a45', 'start': 314.832, 'end': 318.333 },
+        { 'id': 'a46', 'start': 318.333, 'end': 328.066 },
+        { 'id': 'a47', 'start': 328.066, 'end': 337.051 },
+        { 'id': 'a48', 'start': 337.051, 'end': 346.146 },
+        { 'id': 'a49', 'start': 346.146, 'end': 352.636 },
+        { 'id': 'a50', 'start': 352.636, 'end': 356.75 },
+        { 'id': 'a51', 'start': 356.75, 'end': 363.422 },
+        { 'id': 'a52', 'start': 363.422, 'end': 366.267 },
+        { 'id': 'a53', 'start': 366.267, 'end': 370.835 },
+        { 'id': 'a54', 'start': 370.835, 'end': 374.898 },
+        { 'id': 'a55', 'start': 374.898, 'end': 381.551 },
+        { 'id': 'a56', 'start': 381.551, 'end': 386.635 },
+        { 'id': 'a57', 'start': 386.635, 'end': 395.407 },
+        { 'id': 'a58', 'start': 395.407, 'end': 398.822 },
+        { 'id': 'a59', 'start': 398.822, 'end': 402.285 },
+        { 'id': 'a60', 'start': 402.285, 'end': 405.704 },
+        { 'id': 'a61', 'start': 405.704, 'end': 412.134 },
+        { 'id': 'a62', 'start': 412.134, 'end': 415.825 },
+        { 'id': 'a63', 'start': 415.825, 'end': 422.168 },
+        { 'id': 'a64', 'start': 422.168, 'end': 427.364 },
+        { 'id': 'a65', 'start': 427.364, 'end': 430.427 },
+        { 'id': 'a66', 'start': 430.427, 'end': 438.11 },
+        { 'id': 'a67', 'start': 438.11, 'end': 441.057 },
+        { 'id': 'a68', 'start': 441.057, 'end': 446.636 },
+        { 'id': 'a69', 'start': 446.636, 'end': 452.673 },
+        { 'id': 'a70', 'start': 452.673, 'end': 456.726 },
+        { 'id': 'a71', 'start': 456.726, 'end': 460.196 },
+        { 'id': 'a72', 'start': 460.196, 'end': 464.223 },
+        { 'id': 'a73', 'start': 464.223, 'end': 470.94 },
+        { 'id': 'a74', 'start': 470.94, 'end': 477.403 },
+        { 'id': 'a75', 'start': 477.403, 'end': 487.89 },
+        { 'id': 'a76', 'start': 487.89, 'end': 492.625 },
+        { 'id': 'a77', 'start': 492.625, 'end': 498.104 },
+        { 'id': 'a78', 'start': 498.104, 'end': 501.89 },
+        { 'id': 'a79', 'start': 501.89, 'end': 506.581 },
+        { 'id': 'a80', 'start': 506.581, 'end': 509.424 },
+        { 'id': 'a81', 'start': 509.424, 'end': 515.953 },
+        { 'id': 'a82', 'start': 515.953, 'end': 518.438 },
+        { 'id': 'a83', 'start': 518.438, 'end': 521.364 },
+        { 'id': 'a84', 'start': 521.364, 'end': 525.354 },
+        { 'id': 'a85', 'start': 525.354, 'end': 529.503 },
+        { 'id': 'a86', 'start': 529.503, 'end': 532.733 },
+        { 'id': 'a87', 'start': 532.733, 'end': 537.717 },
+        { 'id': 'a88', 'start': 537.717, 'end': 541.078 },
+        { 'id': 'a89', 'start': 541.078, 'end': 544.134 },
+        { 'id': 'a90', 'start': 544.134, 'end': 545.705 },
+        { 'id': 'a91', 'start': 545.705, 'end': 549.38 },
+        { 'id': 'a92', 'start': 549.38, 'end': 552.213 },
+        { 'id': 'a93', 'start': 552.213, 'end': 554.893 },
+        { 'id': 'a94', 'start': 554.893, 'end': 559.682 },
+        { 'id': 'a95', 'start': 559.682, 'end': 561.937 },
+        { 'id': 'a96', 'start': 561.937, 'end': 567.959 },
+        { 'id': 'a97', 'start': 571.602, 'end': 578.887 },
+        { 'id': 'a98', 'start': 578.887, 'end': 581.359 },
+        { 'id': 'a99', 'start': 581.359, 'end': 585.881 },
+        { 'id': 'a100', 'start': 585.881, 'end': 589.193 },
+        { 'id': 'a101', 'start': 589.193, 'end': 594.761 },
+        { 'id': 'a102', 'start': 594.761, 'end': 596.608 },
+        { 'id': 'a103', 'start': 596.608, 'end': 602.648 },
+        { 'id': 'a104', 'start': 602.648, 'end': 607.336 },
+        { 'id': 'a105', 'start': 607.336, 'end': 612.434 },
+        { 'id': 'a106', 'start': 612.434, 'end': 615.898 },
+        { 'id': 'a107', 'start': 615.898, 'end': 620.779 },
+        { 'id': 'a108', 'start': 620.779, 'end': 625.626 },
+    ];
+
+    // Reference to the current annotation being played.
+    var currentAnnotation = null;
+
+    // ID of the timer which tracks the end of annotations.
+    var endAnnotationTimer = null;
+
+    window.onload = function() {
+        // Get the Flowplayer API interface.
+        fp = flashembed("CuPED-global-player-object", {
+            src: "swf/FlowplayerDark.swf",
+            allowscriptaccess: 'always',
+            width: 640,
+            height: 480 
+            }, {config: {
+            autoPlay: false,
+            videoFile: "../data/output.flv",
+            initialScale: 'scale',
+            loop: false,
+
+            showStopButton: false,
+            showScrubber: true,
+            showVolumeSlider: false,
+            showMuteVolumeButton: false,
+            showFullScreenButton: false,
+            showMenu: false,
+            controlsOverVideo: 'locked',
+            controlBarBackgroundColor: -1,
+            controlBarGloss: 'none'
+            }
+        });
+    }
+
+    // Returns the annotation in which this time (in milliseconds) occurs, or
+    // null if this time is not associated with an annotation.
+    function findAnnotation(time_ms) {
+        for (var i = 0; i < annotations.length; i++) {
+            annotation = annotations[i];
+            if ((time_ms >= annotation.start) && (time_ms <= annotation.end)) {
+                return annotation;
+            }
+        }
+
+        return null;
+    }
+
+    // Scroll to a position where the annotation is in the specified spot
+    // on the screen ('top', 'middle', 'bottom', 'none' (no tracking)).
+    function scrollToAnnotation(annotation, position) {
+        // If we shouldn't scroll to follow the current annotation, skip this
+        // code.
+        if (position == 'none') {
+            return;
+        }
+
+        // Get the current scroll position.
+        scrollPosition = 0;
+        if (document.body & document.body.scrollTop) {
+            scrollPosition = document.body.scrollTop;
+        } else if (document.documentElement && document.documentElement.scrollTop) {
+            scrollPosition = document.documentElement.scrollTop;
+        } else if (window.pageYOffset) {
+            scrollPosition = window.pageYOffset;
+        }
+
+        // Get the height of the current window.
+        windowHeight = 0;
+        if (typeof(window.innerHeight) == 'number') {
+            windowHeight = window.innerHeight;
+        } else if (document.documentElement && document.documentElement.clientHeight) {
+            windowHeight = document.documentElement.clientHeight;
+        } else if (document.body && document.body.clientHeight) {
+            windowHeight = document.body.clientHeight;
+        }
+
+        // Get the height of the entire document.
+        documentHeight = document.body.scrollHeight;
+
+        // Get the height of the media player.
+        mediaHeight = 480;
+
+        // Get the y-position of the annotation in the page.
+        div = document.getElementById(annotation.id);
+        divPosition = div.offsetTop;
+        while (div = div.offsetParent) {
+            divPosition += div.offsetParent;
+        }
+
+        finalPosition = divPosition;
+        if (position == 'top') {
+            finalPosition = divPosition - mediaHeight - 10;
+        } else if (position == 'middle') {
+            finalPosition = divPosition - mediaHeight - 
+                ((windowHeight - mediaHeight) / 2) +
+                (document.getElementById(annotation.id).offsetHeight / 2);
+        } else if (position == 'bottom') {
+            finalPosition = divPosition - windowHeight + 
+                document.getElementById(annotation.id).offsetHeight + 10;
+        } else {
+            return;
+        }
+
+        window.scrollTo(0, finalPosition);
+    }
+
+    function setCurrentAnnotation(annotation) {
+        // Unset the current annotation, if there is one.
+        if (currentAnnotation != null) {
+            var anElement = document.getElementById(currentAnnotation.id);
+            var m = anElement.className.match(' CuPED-current-annotation'); 
+            anElement.className = anElement.className.replace(m, '');
+        }
+
+        // Set the current annotation to be the one given, if one was provided.
+        if (annotation != null) {
+            var anElement = document.getElementById(annotation.id);
+            anElement.className += ' CuPED-current-annotation';
+
+            // Scroll to the new element.
+            scrollToAnnotation(annotation, 'top');
+        }
+
+        // Finally, keep a reference to the current annotation.
+        currentAnnotation = annotation;
+    }
+
+    // Callback: check the Flowplayer instance to find out what annotation
+    // we're in and update the display as necessary.
+    function checkAnnotation() {
+        closestAnnotation = findAnnotation(fp.getTime());
+        if (closestAnnotation != currentAnnotation) {
+            setCurrentAnnotation(closestAnnotation);
+        }
+    }
+
+    // Once the player has been initialized, begin watching for changes in
+    // the current annotation.
+    //
+    // The idea behind this is that the JavaScript polls the player every
+    // 'updateInterval' milliseconds to see if we've entered into a new
+    // annotation.  If we have, then the display is updated.
+    function onFlowPlayerReady() {
+        currentAnnotation = null;
+        setInterval(checkAnnotation, updateInterval);
+    }
+
+
+    // Alright, if we can't rely on cue points to work both for audio and for
+    // video, then we'll have to tie our own rope.
+
+    function onStop(clip) {
+        clearTimeout(endAnnotationTimer);
+    }
+
+    function onSeek(clip) {
+        clearTimeout(endAnnotationTimer);
+    }
+
+    function onPause(clip) {
+        clearTimeout(endAnnotationTimer);
+    }
+
+    // Callback: when an annotation is done, pause the player.
+    function onEndAnnotation() {
+        fp.Pause();
+        clearTimeout(endAnnotationTimer);
+    }
+
+    // User wishes to play the annotation with the given ID and starting time
+    // (in seconds).
+    function playAnnotation(start_time, end_time) {
+        // Start the media playing, then seek to the start of the annotation.
+        fp.DoPlay()
+        fp.Seek(start_time);
+
+        // Set a time-out to play just until the end of this annotation.
+        endAnnotationTimer = 
+            setTimeout(onEndAnnotation, (end_time - start_time) * 1000);
+    }
+    //]]>
+</script>
+
+
+<style type="text/css">
+    .CuPED-annotations {
+        font-family: sans-serif;
+        font-size: larger;
+        background: white;
+        margin-top: 495px;
+     }
+    .CuPED-annotation { margin-bottom: 1em; border-collapse: collapse }
+    .CuPED-annotation-player { text-align: center; vertical-align: middle }
+    .CuPED-annotation-line { }
+    .CuPED-annotation-text { padding-right: 1em }
+    .CuPED-current-annotation {
+        background: #B6E8FF;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    /* Fixed titlebar player. */
+    .CuPED-global-player {
+        width: 100%;
+        height: 480px;
+        background: black;
+        border-bottom: 4px solid #add8e6;
+        z-index: 1;
+
+        position: fixed;
+        top: 0px;
+        left: 0px;
+    }
+
+    .CuPED-annotation-tier-0 {
+    }
+</style>
+
+<!--[if gte IE 5]>
+<style type="text/css">
+html, body { height: 100%; overflow-y: hidden; }
+.CuPED-annotations { height: 100%; width: 100%; overflow: auto; margin: 0; padding: 0; }
+.CuPED-global-player { position: absolute; z-index: 1; }
+</style>
+<![endif]-->
+</head>
+<body>
+
+<div class="CuPED-global-player">
+    <div id="CuPED-global-player-object"></div>
+</div>
+
+<div class="CuPED-annotations">
+    
+    <table class="CuPED-annotation" id="a2">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(0.0, 10.631)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Jim, weni je ga-ndo-yawat shkenwéyek iw pi?
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a3">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(10.631, 16.8)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Oh se na gode na shkenwéyek é-gachiwat zhe na
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a4">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(16.8, 27.476)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                pené na gi-kwed'adkwéwek na ni wmetkwabismowan.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a5">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(27.476, 33.921)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Jak zhe na gégo ode, slingshot?.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a6">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(33.921, 43.38)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je gi shkenwék ga-néndagwzewat giwséwnene é-wi-yawat nétem.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a7">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(43.38, 52.97)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Wiye é-shke-ntawét abdék se na gi-wisne'we.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a8">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(52.97, 63.996)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I zhe na é-widmewayet o Mamogosnan ngot giwséwnene shode mine é-pamset.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a9">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(63.996, 74.15)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I zhe na pené ga-zhechkét é-giwséwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a10">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(74.15, 83.678)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Ngi-pénmotwamen o seksi é-wi-wisneyak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a11">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(83.678, 90.444)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je zhe na pené gi-giwséwat shkenwék
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a12">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(90.444, 94.887)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                wi ni na o giwséwnene wa-yawet.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a13">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(94.887, 101.469)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je zhe na gé weye
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a14">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(101.469, 105.314)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                weye é-ntawét
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a15">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(105.314, 113.152)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ngi-swénamen i wiyas.  Ngi-mamigwéymen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a16">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(113.152, 119.242)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I zhi ya...
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a17">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(119.242, 126.797)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw je na pi giwséwnene é-ne-néndawgwseyen é-yawyen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a18">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(126.797, 132.895)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je gé wi mine neko gode gawséjek
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a19">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(132.895, 143.194)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                mine o wa-wgemawet zhe na ni ngoji jayék zhe na mamo zhe giwséwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a20">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(143.194, 147.883)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I gé neko ga-zhechkéwat ngi-déwabdan gé ni ode
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a21">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(147.883, 156.502)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                i shkenwé é-gi-yawyan é-wich-giwsémgwa gode kewéziyek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a22">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(156.502, 161.708)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Ndédéyem neko kche-giwsénene gi-néndawgwze.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a23">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(161.708, 167.206)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Win je neko gi-niganze i é-pa-giwséyak
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a24">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(167.206, 172.911)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                win je ga-nakwnegét ni pi je na wa-o-zhe-giwséyak
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a25">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(172.911, 176.237)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                wa-je-sakgéyak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a26">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(176.237, 180.35)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nin gé shkenwé é-gi-yawyan
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a27">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(180.35, 193.434)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ngi-sakgé zhe na pené égi je gi giwséwnenwek winwa gi-kewabwek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a28">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(193.434, 197.04)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I é zhe na weye é-nsat seksin
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a29">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(197.04, 206.292)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-gi-swé'ondewat zhi bwamshe giwéwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a30">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(206.292, 216.484)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Mine gé gishpen weye,
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a31">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(216.484, 227.881)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                nish, gishpen gé nish nenwek winwa gi-nsawan é-kedwat, iw je o ndédéyem win
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a32">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(227.881, 236.017)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-pa-inabet ibe ga-zhe-nakwiwat ga-je-nibwewat mine ga-zhe-gabot o seksi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a33">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(236.017, 241.488)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                mine ga-je-wépgojek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a34">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(241.488, 245.237)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw je win
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a35">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(245.237, 248.904)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ga-nakwneget wi ni na ga-nsat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a36">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(248.904, 255.878)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                O jak zhe na giwséwnenwek é-ayajmowat é-ajdemwat zhe na i
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a37">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(255.878, 262.896)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ndédéyem neko é-nanibwet &quot;Ahau,&quot; kedo, &quot;Win gi-nsan.&quot;
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a38">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(262.896, 268.665)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je i cho wiye gégo gi-kedsi.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a39">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(268.665, 275.548)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Cho wiye wgi-nakmeksin.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a40">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(275.548, 283.781)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw se win ga-nakwnegét jak zhe na gégo é-debabdek gé wi ni na ga-nsat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a41">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(283.781, 289.67)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Gishpen je nakwnegét ode wgi-nsan iw se jo weye gi-kedsi.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a42">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(289.67, 300.347)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Na mine gi-pshinawat ni mine ngoji é-gi-zhe-giwséwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a43">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(300.347, 309.602)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nangodgen gé é-bbongek wgi-wjeknawan ni seksin zhi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a44">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(309.602, 314.832)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                cho gi-pshinawsiwan pama zhe na pi wgi-byé-nanawan.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a45">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(314.832, 318.333)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Gbégizhek géna wi-giwséwak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a46">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(318.333, 328.066)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nangodgen nekmek ngi-samen seksik.  Nibwa-debek neko ngi-nanamen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a47">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(328.066, 337.051)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nin gé zhe shkenwé é-gi-yawyan abdék ngi-wjitmagé gé ni naj-dabwangwa gi seksiyek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a48">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(337.051, 346.146)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Mine gé ode nakwnegen ngot ga-yawyek bnewi zhe na éko giwset neshnabé.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a49">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(346.146, 352.636)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Weye gi-nsat seksin zhi bmagwzhenet é je wdokman é-byé-nenmagwiyen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a50">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(352.636, 356.75)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw é-wi-pshinet o seksi.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a51">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(356.75, 363.422)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je gé wi wi-minek ni séyen,
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a52">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(363.422, 366.267)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-pshinet o.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a53">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(366.267, 370.835)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Ni je gnokanek se é-wi-bshingéyen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a54">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(370.835, 374.898)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw gé wi neko ga-zhechgéwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a55">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(374.898, 381.551)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Mine gé wésakgét nsat seksin zhi mégwa é-sakgét
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a56">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(381.551, 386.635)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                gi-wjiknana zhe na zhi, abdék wi-zhabshkan i é-zhyat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a57">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(386.635, 395.407)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Pama zhe na weye gi-byé wjitmagon é-byé-naj-dabwanawat anaké é-wikkenwawat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a58">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(395.407, 398.822)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Gishpen bbomgek
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a59">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(398.822, 402.285)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                iw neko ga-zhechkéwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a60">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(402.285, 405.704)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Ngom je wi zhe na
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a61">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(405.704, 412.134)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                cho zhe na weye néna giwsési.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a62">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(412.134, 415.825)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I zhe na twenty-two ngi-byéyomen ninan,
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a63">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(415.825, 422.168)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ngodek médwéwék.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a64">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(422.168, 427.364)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je i ga-kche-wenakéyan ngodek é-mdewézgéyan.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a65">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(427.364, 430.427)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nangodgen gé zhe na gi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a66">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(430.427, 438.11)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                cho gi wénsnon basksegen, abdék gwigde'an i nwis gi-gish-mdewézgéyen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a67">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(438.11, 441.057)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je i neko
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a68">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(441.057, 446.636)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                nseze ngi-widmak
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a69">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(446.636, 452.673)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                &quot;kwégnak gwi-nenwa anaké shtegwanek.&quot;
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a70">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(452.673, 456.726)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                I je ga-byé-zhechgéyan gé ni.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a71">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(456.726, 460.196)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                É-gachinowak i twenty-two.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a72">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(460.196, 464.223)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Gishpen shode newet nangodgen wase ze na gi-petowek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a73">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(464.223, 470.94)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Nangodgen gé ngi-nge'amen é-bon-mskwégwzewat,
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a74">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(470.94, 477.403)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-bon-mskwiwat.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a75">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(477.403, 487.89)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw jak zhe na gégo ngom é-ngesen, wgi-ngeton neshnabé.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a76">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(487.89, 492.625)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw je gé i
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a77">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(492.625, 498.104)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                cho  zhe weye kégo gi-kedsi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a78">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(498.104, 501.89)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ga-gish-sheno'wat ne o ga-ntawéjen.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a79">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(501.89, 506.581)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                É-gi-gizhakwnegét.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a80">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(506.581, 509.424)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ???Mawn jo na ngebeta migadwek. ???
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a81">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(509.424, 515.953)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Neshnabék migadwat ni seksin.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a82">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(515.953, 518.438)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw se gé
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a83">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(518.438, 521.364)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                pené zhe gi-niganze o
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a84">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(521.364, 525.354)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                nospen mégwa na weye é-gi-giwset.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a85">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(525.354, 529.503)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Pama zhe na gé ninan é-ne-gizhgiyak é-gi-bon-giwsét
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a86">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(529.503, 532.733)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                a je ninan.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a87">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(532.733, 537.717)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Pené gi-bme-wijiwaw o seze pa-giwséyak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a88">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(537.717, 541.078)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Wi yé i ga-je-méshendeman jayék ne ibe
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a89">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(541.078, 544.134)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ga-je-giwséyak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a90">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(544.134, 545.705)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Ézhi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a91">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(545.705, 549.38)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Camp 4 é-zhnekadek, kche senik.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a92">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(549.38, 552.213)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Mine zhe zheskwzibik
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a93">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(552.213, 554.893)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                wi yé o gé zhe ga zhe
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a94">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(554.893, 559.682)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                mine pené ga-je-kwtemojgéyan.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a95">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(559.682, 561.937)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Pené zhe ngi-bme-wijewa.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a96">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(561.937, 567.959)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Cho zhe na gégo ngi-knomagwsi nmeche-wabma ézhchegét.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a97">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(571.602, 578.887)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Gganabmakézhi bmekshwéwat gi shegnek.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a98">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(578.887, 581.359)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                A zhe
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a99">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(581.359, 585.881)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ngoji é-ni-nigan é-bmezhyat zhi o nsezé. É-gwdemonat ni
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a100">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(585.881, 589.193)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                &quot;Ni je yédek ézhchegét?&quot; ndenéndem.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a101">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(589.193, 594.761)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                É-wabmek pama zhe zhgenawshen é-pogdewat zhi mbik
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a102">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(594.761, 596.608)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                pama zhe gi
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a103">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(596.608, 602.648)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-debbenwawat ni, i zhe i wgwedemojgen é-pogedot.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a104">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(602.648, 607.336)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw gé zhe ngot o
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a105">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(607.336, 612.434)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                na ga-mojyat pené ga-zhechgét
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a106">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(612.434, 615.898)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                ga-zhe-gkéndemak gé ninan wa zhechkéyak
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a107">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(615.898, 620.779)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                é-wi-gwdemonayak.
+            </td>
+        </tr>
+    </table>
+    
+    <table class="CuPED-annotation" id="a108">
+        <tr class="CuPED-annotation-line CuPED-annotation-tier-0">
+            
+            <td rowspan="1">
+                <img src="img/speaker.png" alt="Play annotation" onclick="playAnnotation(620.779, 625.626)" />
+            </td>
+            <td colspan="1" class="CuPED-annotation-text">
+                Iw.
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
